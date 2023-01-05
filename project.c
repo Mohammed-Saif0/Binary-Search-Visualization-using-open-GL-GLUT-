@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<GL/glut.h>
+#include<string.h>
+#include<unistd.h>
 
 void display();
 void init();
@@ -7,7 +9,7 @@ void reshape(int,int);
 void timer(int);
 void lower();
 void box();
-
+void binarySearch();
 int state = 0;
 int hi ;
 int low = 0;
@@ -60,8 +62,7 @@ void initalize()
     }
     hi = n-1;
     pivot = (hi+low)/2;
-    for(int i=0;i<n;i++)
-        printf("%d->",pol[i].number);
+    
     printf("Enter the search value\n");
     scanf("%d",&search);
     for(int i=0;i<n;i++)
@@ -115,7 +116,7 @@ int main(int argc,char** argv)
 }
 
 char str[10];
-char index[10];
+char indexin[10];
 char indexTxt[10] = "INDEX :";
 void polygon1(int i)
 {
@@ -131,10 +132,10 @@ void polygon1(int i)
     glRasterPos2f(pol[i].v[0][0]+0.2,pol[i].v[0][1]/2);
     for(int i=0;i<strlen(str);i++)
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,str[i]);
-    sprintf(index,"%d",i);
+    sprintf(indexin,"%d",i);
     glRasterPos2f(pol[i].v[0][0]+0.2,pol[i].v[0][1]-3);
-    for(int i=0;i<strlen(index);i++)
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,index[i]);
+    for(int i=0;i<strlen(indexin);i++)
+    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,indexin[i]);
     glRasterPos2f(-9.5,-1);
     for(int i=0;i<strlen(indexTxt);i++)
     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,indexTxt[i]);
@@ -274,6 +275,7 @@ void binarySearch()
 int lockLower=0;
 void timer(int x)
 {
+	printf("%f",half);
     glutPostRedisplay();
     glutTimerFunc(1000/60,timer,0);
 switch(state)
@@ -281,12 +283,12 @@ switch(state)
     case 0:
         if(pivot>half){
             half+=0.01;
-            printf("half %d",half);
+          
         }
         else{
             flag++;
             complete = 1;
-            Sleep(1000);
+            sleep(2);
         }
         break;
         case 1:
@@ -295,7 +297,7 @@ switch(state)
         else
         {
         flag++;
-        Sleep(2000);
+        sleep(2);
         complete = 2;
         }
         break;
@@ -305,7 +307,7 @@ switch(state)
         else
         {
             flag++;
-            Sleep(2000);
+            sleep(2);
         }
         break;
     case 4:
@@ -346,7 +348,7 @@ void display()
 }
 void init()
 {
-    glClearColor(0.0, 0.0, 0.4, 1.0);
+    glClearColor(0.5, 0.0, 0.5, 1.0);
 }
 
 void reshape(int w,int h)
@@ -358,4 +360,3 @@ void reshape(int w,int h)
     glMatrixMode(GL_MODELVIEW);
 
 }
-
